@@ -257,10 +257,10 @@ jobs:
 
     steps:
     - name: 检出代码
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: 设置JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v2
       with:
         java-version: '11'
         distribution: 'temurin'
@@ -270,7 +270,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: 上传构建产物
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: plugin-jar
         path: target/*.jar
