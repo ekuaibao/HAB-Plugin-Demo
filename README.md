@@ -235,6 +235,65 @@ src/
                     └── MyPluginTest.java
 ```
 
+## 自动构建与部署
+
+### GitHub Actions 自动构建
+
+本项目已配置GitHub Actions用于自动构建，配置文件位于`.github/workflows/maven-build.yml`。每当代码推送到主分支或创建Pull Request时，会自动触发构建流程：
+
+```yaml
+name: Maven构建
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v3
+
+    - name: 设置JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: 使用Maven构建
+      run: mvn -B package --file pom.xml
+
+    - name: 上传构建产物
+      uses: actions/upload-artifact@v3
+      with:
+        name: plugin-jar
+        path: target/*.jar
+        retention-days: 5
+```
+
+### 使用自动构建
+
+1. 将代码推送到GitHub仓库
+2. GitHub Actions会自动执行构建
+3. 构建完成后，可在Actions页面下载构建产物
+4. 将下载的JAR包部署到您的插件平台
+
+### 手动触发构建
+
+您也可以在GitHub仓库的Actions页面手动触发构建流程：
+
+1. 进入您的GitHub仓库
+2. 点击"Actions"选项卡
+3. 选择"Maven构建"工作流
+4. 点击"Run workflow"按钮
+5. 选择分支并确认运行
+
 ## 测试插件
 
 1. 编译插件项目
@@ -307,6 +366,7 @@ private Object getCellValue(Cell cell) {
 6. 添加必要的注释说明复杂逻辑
 7. 代码模块化，将业务逻辑拆分为多个方法
 8. 使用VO类规范化数据结构
+9. 配置自动化构建和测试，确保代码质量
 
 ## 常见问题
 
@@ -314,9 +374,11 @@ private Object getCellValue(Cell cell) {
 2. **属性无法配置**：检查`@JsonSchemaProperty`注解配置是否正确
 3. **执行失败**：查看日志，确保异常处理正确
 4. **返回值不正确**：确保`@Execute`注解中指定了正确的`outputClass`
+5. **自动构建失败**：检查GitHub Actions日志，确认Maven配置和依赖是否正确
 
 ## 参考资料
 
 - [PF4J插件框架文档](https://pf4j.org/)
 - [Apache POI文档](https://poi.apache.org/)
-- [Lombok文档](https://projectlombok.org/) 
+- [Lombok文档](https://projectlombok.org/)
+- [GitHub Actions文档](https://docs.github.com/cn/actions) 
