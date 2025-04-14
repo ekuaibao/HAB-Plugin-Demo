@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Plugin-Id: hab-plugin-demo
+Plugin-Version: 1.0.10
+Plugin-Provider: Piper
+Plugin-Class: com.hosecloud.demo.DemoPlugin
+Plugin-Dependencies:

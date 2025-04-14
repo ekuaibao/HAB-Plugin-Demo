@@ -1,0 +1,51 @@
+<!--
+ Describes the dist
+
+ @author Decebal Suiu
+ @version 1.0
+-->
+<assembly>
+	<id>app</id>
+	<formats>
+		<format>dir</format>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+				<include>*:jar:*</include>
+                <include>*:zip:*</include>
+			</includes>
+            <excludes>
+                <exclude>com.hosecloud.hab:plugin:*</exclude>
+                <exclude>org.apache.httpcomponents:httpclient:*</exclude>
+                <exclude>org.apache.httpcomponents:httpcore:*</exclude>
+                <exclude>org.apache.httpcomponents:httpmime:*</exclude>
+            </excludes>
+		</dependencySet>
+	</dependencySets>
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <outputDirectory>classes</outputDirectory>
+            <includes>
+                <include>**/*.class</include>
+                <include>**/*.xml</include>
+                <include>**/*.properties</include>
+                <include>META-INF/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/META-INF</directory>
+            <outputDirectory>classes/META-INF</outputDirectory>
+            <includes>
+                <include>MANIFEST.MF</include>
+                <include>extensions.idx</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+    </fileSets>
+</assembly> 
