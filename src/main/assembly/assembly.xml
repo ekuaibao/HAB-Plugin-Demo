@@ -35,15 +35,14 @@
                 <include>**/*.class</include>
                 <include>**/*.xml</include>
                 <include>**/*.properties</include>
-                <include>META-INF/**</include>
+                <include>META-INF/extensions.idx</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources/META-INF</directory>
+            <directory>${project.build.directory}/manifest-temp/META-INF</directory>
             <outputDirectory>classes/META-INF</outputDirectory>
             <includes>
                 <include>MANIFEST.MF</include>
-                <include>extensions.idx</include>
             </includes>
             <fileMode>0644</fileMode>
         </fileSet>

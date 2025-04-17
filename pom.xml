@@ -6,7 +6,7 @@
 
     <groupId>com.hosecloud.demo</groupId>
     <artifactId>plugin-demo</artifactId>
-    <version>1.0</version>
+    <version>1.1.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <plugin.id>demo-plugin</plugin.id>
         <plugin.class>com.hosecloud.demo.DemoPlugin</plugin.class>
-        <plugin.version>1.1.1</plugin.version>
+        <plugin.version>${project.version}</plugin.version>
         <plugin.provider>ZhangPing</plugin.provider>
         <plugin.dependencies/>
     </properties>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.hosecloud.hab</groupId>
             <artifactId>plugin</artifactId>
-            <version>1.0.0</version>
+            <version>1.5.10</version>
         </dependency>
         <!-- Apache POI - Excel处理 -->
         <dependency>
@@ -92,6 +92,32 @@
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-manifest</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/manifest-temp</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/resources</directory>
+                                    <includes>
+                                        <include>META-INF/MANIFEST.MF</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
